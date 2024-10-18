@@ -13,29 +13,25 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials: any): Promise<any> {
-        await dbConnect();
+        await dbConnect()
         try {
           const user = await UserModel.findOne({
             $or: [{ email: credentials.identifier }, { username: credentials.identifier }]
-          });
-
+          })
           if (!user) {
-            throw new Error("User does not exist");
+            throw new Error("user does not exist")
           }
-
           if (!user.isVerified) {
-            throw new Error("Kindly verify the account first");
+            throw new Error("please verify your account first")
           }
-
-          const verifiedPassword = await bcryptjs.compare(credentials.password, user.password);
-
+          const verifiedPassword = await bcryptjs.compare(credentials.password, user.password)
           if (verifiedPassword) {
-            return user;
+            return user
           } else {
-            throw new Error("Incorrect password");
+            throw new Error("incorrect password")
           }
         } catch (error: any) {
-          throw new Error(error.message);
+          throw new Error(error)
         }
       }
     })
@@ -43,12 +39,12 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token._id = user._id?.toString();
-        token.username = user.username;
-        token.isAcceptingMessages = user.isAcceptingMessages;
-        token.isVerified = user.isVerified;
+        token._id=user._id?.toString();  
+        token.username=user.username;
+        token.isAcceptingMessages=user.isAcceptingMessages;
+        token.isVerified=user.isVerified;
       }
-      return token;
+      return token
     },
     async session({ session, token }) {
       if (token) {
@@ -57,8 +53,8 @@ export const authOptions: NextAuthOptions = {
         session.user.isAcceptingMessages=token.isAcceptingMessages;
         session.user.isVerified=token.isVerified;
       }
-      return session;
-    }
+      return session
+    },
   },
   session: {
     strategy: "jwt"
