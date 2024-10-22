@@ -1,18 +1,8 @@
-"use client"
-import React, { useState } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-import Link from "next/link"
-const Page = () => {
-    const [username, setUsername] = useState('')
-    const [usernameMessage , setUsernameMessage] = useState('')
-    const [isCheckingUsername, setIsCheckingUsername] = useState(false)
-    const [isSubmitting, setIsSubmitting] = useState(false)
-
+import { Page } from "openai/pagination.mjs";
+import React from "react";
+const page = () => {
     return (
         <div>Page</div>
     )
 }
-
-export default Page
+export default page
