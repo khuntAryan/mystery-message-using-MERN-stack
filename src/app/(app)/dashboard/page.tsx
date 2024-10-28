@@ -97,7 +97,8 @@ const dashBoard = () => {
     }
 
     //custom url 
-    const { username } = session?.user as User
+    const username = (session?.user as User)?.username || 'defaultUsername';
+
     const baseURL = `${window.location.protocol}//${window.location.host}`
     const profileUrl = `${baseURL}/u/${username}`
 
